@@ -24,7 +24,6 @@
             gap: 40px;
         }
         
-        /* DỊCH VÒNG QUAY SANG TRÁI CHÚT */
         .wheel-area {
             display: flex;
             justify-content: center;
@@ -125,12 +124,13 @@
             object-fit: fill;
         }
 
+        /* ĐÃ SỬA CÂN BẰNG TUYỆT ĐỐI VÒNG CHẤM TRÒN */
         .dots-ring {
             position: absolute;
-            top: -5px; 
-            left: -5px;
-            width: 500px;
-            height: 500px;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 5;
         }
@@ -148,9 +148,9 @@
             height: 8px;
             background-color: #ffffff;
             border-radius: 50%;
-            top: -1.5px; 
+            top: 3.5px; 
             left: 50%;
-            margin-left: -4px; 
+            transform: translateX(-50%);
             box-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
@@ -181,7 +181,6 @@
         #pointer-yellow { --p-color: #FFFFFF; }
         #pointer-blue { --p-color: #FFFFFF; }
 
-        /* KHU VỰC ĐIỂM SỐ & THẺ NGƯỜI CHƠI BÊN PHẢI */
         .players-scoreboard {
             flex-grow: 1;
             display: flex;
@@ -213,7 +212,6 @@
         .row-yellow .score-box { background: #ffff00; color: #000000; border-color: #000000; }
         .row-blue .score-box { background: #0000ff; color: #ffffff; }
 
-        /* LƯỚI THẺ: HÀNG TRÊN 6 Ô, HÀNG DƯỚI 5 Ô */
         .cards-grid {
             display: flex;
             flex-direction: column;
@@ -512,7 +510,6 @@
             }, 4200);
         }
 
-        // ĐỒNG BỘ ĐIỂM SỐ VÀ THẺ
         function executeUpdateScores(scores) {
             document.getElementById('display-red-round').innerText = scores.redRound.toLocaleString();
             document.getElementById('display-red-total').innerText = scores.redTotal.toLocaleString();
@@ -532,7 +529,6 @@
             }
         }
 
-        // LẮNG NGHE REALTIME SUPABASE
         try {
             const channel = supabase.channel('wheel_room');
             channel.on('broadcast', { event: 'toggle_wheel' }, function(payload) {
@@ -561,10 +557,9 @@
                 executeUpdatePlayerCard(payload.payload.color, payload.payload.cardIdx, payload.payload.isActive);
             }).subscribe();
         } catch (e) {
-            // Thực thi im lặng khi offline
+            // Thực thi im lặng
         }
 
-        // ĐỒNG BỘ STORAGE DỰ PHÒNG
         window.addEventListener('storage', function(e) {
             if (e.key === 'local_wheel_cmd') {
                 const data = JSON.parse(e.newValue);
