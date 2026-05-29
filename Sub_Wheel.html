@@ -13,18 +13,16 @@
         }
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background: purple;
             color: white;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            gap: 40px;
         }
         
-        /* DỊCH VÒNG QUAY SANG TRÁI CHÚT */
         .wheel-area {
             display: flex;
             justify-content: center;
@@ -34,12 +32,10 @@
             height: 600px;
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
             transform-origin: center top; 
-            margin-left: 20px;
-            flex-shrink: 0;
         }
 
         .wheel-area.zoomed {
-            transform: scale(1.6) translateX(40px) translateY(30px);
+            transform: scale(2) translateY(50px);
         }
 
         .wheel-container {
@@ -64,6 +60,7 @@
             position: relative;
         }
 
+        /* KHUNG HÌNH CHỮ NHẬT TRUNG TÂM */
         #specialValuePopup {
             position: absolute;
             top: 50%;
@@ -176,84 +173,28 @@
             transform: translateX(-50%);
             filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4));
         }
-        .pointer-body svg path { transition: fill 0.2s; }
+
+        .pointer-body svg path {
+            transition: fill 0.2s;
+        }
+
         #pointer-red { --p-color: #FFFFFF; }
         #pointer-yellow { --p-color: #FFFFFF; }
         #pointer-blue { --p-color: #FFFFFF; }
-
-        /* KHU VỰC ĐIỂM SỐ & THẺ NGƯỜI CHƠI BÊN PHẢI */
-        .players-scoreboard {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-width: 650px;
-        }
-        .player-row {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-        .score-boxes {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-        .score-box {
-            flex: 1;
-            padding: 12px;
-            font-size: 22px;
-            text-align: center;
-            border-radius: 8px;
-            border: 2px solid white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        .row-red .score-box { background: #ff0000; color: #ffffff; }
-        .row-yellow .score-box { background: #ffff00; color: #000000; border-color: #000000; }
-        .row-blue .score-box { background: #0000ff; color: #ffffff; }
-
-        /* LƯỚI THẺ: HÀNG TRÊN 6 Ô, HÀNG DƯỚI 5 Ô */
-        .cards-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .cards-line {
-            display: flex;
-            gap: 6px;
-            justify-content: space-between;
-        }
-        .card-slot {
-            flex: 1;
-            padding: 8px 4px;
-            font-size: 11px;
-            text-align: center;
-            border-radius: 5px;
-            background: #000000;
-            color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.3);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: background 0.3s, color 0.3s;
-        }
-        .card-slot.active {
-            background: #39ff14 !important;
-            color: #000000 !important;
-            border-color: #000000;
-        }
     </style>
 </head>
 <body>
 
     <div class="wheel-area" id="wheelArea">
         <div class="wheel-container" id="wheelContainer">
+            
             <div id="wheelGraphic">
                 <div class="items-ring" id="itemsRing"></div>
                 <div class="dots-ring" id="dotsRing"></div>
             </div>
+
             <div id="specialValuePopup">0 điểm</div>
+            
             <div class="pointer-wrapper wrapper-red">
                 <div class="pointer-body" id="pointer-red">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
@@ -261,6 +202,7 @@
                     </svg>
                 </div>
             </div>
+            
             <div class="pointer-wrapper wrapper-yellow">
                 <div class="pointer-body" id="pointer-yellow">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
@@ -268,85 +210,12 @@
                     </svg>
                 </div>
             </div>
+            
             <div class="pointer-wrapper wrapper-blue">
                 <div class="pointer-body" id="pointer-blue">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
                         <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
                     </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="players-scoreboard">
-        <div class="player-row row-red" id="row-red">
-            <div class="score-boxes">
-                <div class="score-box" id="display-red-round">Vòng: 0</div>
-                <div class="score-box" id="display-red-total">Tổng: 0</div>
-            </div>
-            <div class="cards-grid">
-                <div class="cards-line">
-                    <div class="card-slot" data-card="0">Thẻ 1/2 (1)</div>
-                    <div class="card-slot" data-card="1">Thẻ 1/2 (2)</div>
-                    <div class="card-slot" data-card="2">Cơ Hội</div>
-                    <div class="card-slot" data-card="3">Kháng Mất Điểm</div>
-                    <div class="card-slot" data-card="4">10.000</div>
-                    <div class="card-slot" data-card="5">1 Triệu</div>
-                </div>
-                <div class="cards-line" style="padding: 0 4%;">
-                    <div class="card-slot" data-card="6">Thẻ Nhân Đôi</div>
-                    <div class="card-slot" data-card="7">Bảo Vệ</div>
-                    <div class="card-slot" data-card="8">Thẻ Thêm Lượt</div>
-                    <div class="card-slot" data-card="9">Ô Nhân Đôi</div>
-                    <div class="card-slot" data-card="10">Ô Thêm Lượt</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="player-row row-yellow" id="row-yellow">
-            <div class="score-boxes">
-                <div class="score-box" id="display-yellow-round">Vòng: 0</div>
-                <div class="score-box" id="display-yellow-total">Tổng: 0</div>
-            </div>
-            <div class="cards-grid">
-                <div class="cards-line">
-                    <div class="card-slot" data-card="0">Thẻ 1/2 (1)</div>
-                    <div class="card-slot" data-card="1">Thẻ 1/2 (2)</div>
-                    <div class="card-slot" data-card="2">Cơ Hội</div>
-                    <div class="card-slot" data-card="3">Kháng Mất Điểm</div>
-                    <div class="card-slot" data-card="4">10.000</div>
-                    <div class="card-slot" data-card="5">1 Triệu</div>
-                </div>
-                <div class="cards-line" style="padding: 0 4%;">
-                    <div class="card-slot" data-card="6">Thẻ Nhân Đôi</div>
-                    <div class="card-slot" data-card="7">Bảo Vệ</div>
-                    <div class="card-slot" data-card="8">Thẻ Thêm Lượt</div>
-                    <div class="card-slot" data-card="9">Ô Nhân Đôi</div>
-                    <div class="card-slot" data-card="10">Ô Thêm Lượt</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="player-row row-blue" id="row-blue">
-            <div class="score-boxes">
-                <div class="score-box" id="display-blue-round">Vòng: 0</div>
-                <div class="score-box" id="display-blue-total">Tổng: 0</div>
-            </div>
-            <div class="cards-grid">
-                <div class="cards-line">
-                    <div class="card-slot" data-card="0">Thẻ 1/2 (1)</div>
-                    <div class="card-slot" data-card="1">Thẻ 1/2 (2)</div>
-                    <div class="card-slot" data-card="2">Cơ Hội</div>
-                    <div class="card-slot" data-card="3">Kháng Mất Điểm</div>
-                    <div class="card-slot" data-card="4">10.000</div>
-                    <div class="card-slot" data-card="5">1 Triệu</div>
-                </div>
-                <div class="cards-line" style="padding: 0 4%;">
-                    <div class="card-slot" data-card="6">Thẻ Nhân Đôi</div>
-                    <div class="card-slot" data-card="7">Bảo Vệ</div>
-                    <div class="card-slot" data-card="8">Thẻ Thêm Lượt</div>
-                    <div class="card-slot" data-card="9">Ô Nhân Đôi</div>
-                    <div class="card-slot" data-card="10">Ô Thêm Lượt</div>
                 </div>
             </div>
         </div>
@@ -468,13 +337,19 @@
             }
         }
 
+        // --- HÀM TÌM GIÁ TRỊ Ô HIỆN TẠI TẠI KIM VÀNG ---
         function getWedgeValueAtYellowPointer() {
             if (!isSpecialMode || specialWedges.length === 0) return "Chưa xáo giá trị";
+            
             let remainder = currentRotation % 360;
+            // Đổi từ góc quay xuôi sang góc tương đối trên mặt đĩa ngược chiều kim đồng hồ
             let angleAtTop = (360 - remainder) % 360;
+
+            // Ô số 1 nằm góc [0 -> 15 độ], ô số 2 [15 -> 30 độ], ...
             let wedgeIndex = Math.floor(angleAtTop / 15);
             if (wedgeIndex < 0) wedgeIndex = 0;
             if (wedgeIndex > 23) wedgeIndex = 23;
+
             let result = specialWedges[wedgeIndex];
             return typeof result === 'number' ? result.toLocaleString() + " điểm" : result;
         }
@@ -489,22 +364,33 @@
             specialValuePopup.style.display = 'none';
         }
 
+        // --- HÀM QUAY ĐẾN Ô CAO NHẤT ---
         function executeFindHighest() {
             if (!isSpecialMode || specialWedges.length === 0) return;
+
+            // Chuyển mảng thành dạng số để tìm Max
             const parseVal = (v) => typeof v === 'string' ? parseInt(v.replace('x', '')) : v;
             let numericValues = specialWedges.map(parseVal);
             let maxVal = Math.max(...numericValues);
             let targetIndex = numericValues.indexOf(maxVal);
+
+            // Tâm của ô đích (Ví dụ ô 1 có tâm ở 7.5 độ)
             let targetCenterAngle = (targetIndex * 15) + 7.5;
+
+            // Tính toán góc lệch và bù trừ vòng quay
             let currentNormalized = currentRotation % 360;
             let targetAngleDiff = (360 - targetCenterAngle) - currentNormalized;
+            
             if (targetAngleDiff <= 0) targetAngleDiff += 360;
+
+            // Cộng thêm 3 vòng lớn (1080 độ) để nón chuyển động quay mượt mà
             currentRotation += targetAngleDiff + 1080;
 
             wheelGraphic.style.transitionDuration = '4s';
             wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
             specialValuePopup.style.display = 'none';
 
+            // Sau khi nón kết thúc hoạt ảnh (4 giây) -> Tự động bật mở khung hiển thị lên
             setTimeout(() => {
                 let realValue = specialWedges[targetIndex];
                 specialValuePopup.innerText = typeof realValue === 'number' ? realValue.toLocaleString() + " điểm" : realValue;
@@ -512,27 +398,7 @@
             }, 4200);
         }
 
-        // ĐỒNG BỘ ĐIỂM SỐ VÀ THẺ
-        function executeUpdateScores(scores) {
-            document.getElementById('display-red-round').innerText = "Vòng: " + scores.redRound.toLocaleString();
-            document.getElementById('display-red-total').innerText = "Tổng: " + scores.redTotal.toLocaleString();
-            document.getElementById('display-yellow-round').innerText = "Vòng: " + scores.yellowRound.toLocaleString();
-            document.getElementById('display-yellow-total').innerText = "Tổng: " + scores.yellowTotal.toLocaleString();
-            document.getElementById('display-blue-round').innerText = "Vòng: " + scores.blueRound.toLocaleString();
-            document.getElementById('display-blue-total').innerText = "Tổng: " + scores.blueTotal.toLocaleString();
-        }
-
-        function executeUpdatePlayerCard(color, cardIdx, isActive) {
-            const container = document.getElementById('row-' + color);
-            if (!container) return;
-            const slot = container.querySelector(`.card-slot[data-card="${cardIdx}"]`);
-            if (slot) {
-                if (isActive) slot.classList.add('active');
-                else slot.classList.remove('active');
-            }
-        }
-
-        // LẮNG NGHE REALTIME SUPABASE
+        // LẮNG NGHE ĐỒNG BỘ REALTIME
         try {
             const channel = supabase.channel('wheel_room');
             channel.on('broadcast', { event: 'toggle_wheel' }, function(payload) {
@@ -555,16 +421,12 @@
                 executeHideValue();
             }).on('broadcast', { event: 'find_highest' }, function() {
                 executeFindHighest();
-            }).on('broadcast', { event: 'sync_scores' }, function(payload) {
-                executeUpdateScores(payload.payload);
-            }).on('broadcast', { event: 'toggle_player_card' }, function(payload) {
-                executeUpdatePlayerCard(payload.payload.color, payload.payload.cardIdx, payload.payload.isActive);
             }).subscribe();
         } catch (e) {
-            // Thực thi im lặng khi offline
+            console.log("Realtime Offline");
         }
 
-        // ĐỒNG BỘ STORAGE DỰ PHÒNG
+        // ĐỒNG BỘ LOCAL STORAGE DỰ PHÒNG
         window.addEventListener('storage', function(e) {
             if (e.key === 'local_wheel_cmd') {
                 const data = JSON.parse(e.newValue);
@@ -583,8 +445,6 @@
                 if (data.event === 'show_value') executeShowValue();
                 if (data.event === 'hide_value') executeHideValue();
                 if (data.event === 'find_highest') executeFindHighest();
-                if (data.event === 'sync_scores') executeUpdateScores(data);
-                if (data.event === 'toggle_player_card') executeUpdatePlayerCard(data.color, data.cardIdx, data.isActive);
             }
         });
 

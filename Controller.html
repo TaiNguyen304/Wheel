@@ -49,7 +49,7 @@
         button.btn-off { background: #ff00ff; }
         button.btn-off:hover { background: orange !important; color: #fff !important; }
         
-        input[type="number"] {
+        input[type="number"], input[type="text"] {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -75,6 +75,41 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             font-size: 14px;
+        }
+
+        /* THIẾT KẾ ĐIỀU KHIỂN NGƯỜI CHƠI */
+        .player-control-block {
+            border: 3px solid #ccc;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .block-red { border-color: red; }
+        .block-yellow { border-color: yellow; }
+        .block-blue { border-color: blue; }
+
+        .score-display-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .score-info-box {
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+            color: white;
+            min-width: 160px;
+            text-align: center;
+        }
+        .btn-card-toggle {
+            padding: 6px 10px;
+            font-size: 11px;
+            background: #333;
+            border: 1px solid #fff;
+        }
+        .btn-card-toggle.active-status {
+            background: #39ff14;
+            color: #000;
         }
     </style>
 </head>
@@ -142,6 +177,60 @@
         <div class="grid-4" id="itemsContainer"></div>
     </div>
 
+    <div class="section">
+        <h2>Bảng Điều Khiển Người Chơi</h2>
+
+        <div class="player-control-block block-red">
+            <h3 style="color: red; margin-top: 0;">NC ĐỎ</h3>
+            <div class="score-display-row">
+                <div class="score-info-box" id="ctrl-red-round-box" style="background: red;">Điểm Vòng: 0</div>
+                <div class="score-info-box" id="ctrl-red-total-box" style="background: red;">Điểm Tổng: 0</div>
+            </div>
+            <div class="flex-row" style="margin-bottom: 12px;">
+                <input type="text" id="score-input-red" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
+                <button onclick="modifyScore('red', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
+                <button onclick="modifyScore('red', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
+                <button onclick="modifyScore('red', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+            </div>
+            <div class="flex-row" id="cards-row-red"></div>
+        </div>
+
+        <div class="player-control-block block-yellow">
+            <h3 style="color: yellow; margin-top: 0;">NC VÀNG</h3>
+            <div class="score-display-row">
+                <div class="score-info-box" id="ctrl-yellow-round-box" style="background: yellow; color: #000;">Điểm Vòng: 0</div>
+                <div class="score-info-box" id="ctrl-yellow-total-box" style="background: yellow; color: #000;">Điểm Tổng: 0</div>
+            </div>
+            <div class="flex-row" style="margin-bottom: 12px;">
+                <input type="text" id="score-input-yellow" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
+                <button onclick="modifyScore('yellow', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
+                <button onclick="modifyScore('yellow', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
+                <button onclick="modifyScore('yellow', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+            </div>
+            <div class="flex-row" id="cards-row-yellow"></div>
+        </div>
+
+        <div class="player-control-block block-blue">
+            <h3 style="color: blue; margin-top: 0;">NC XANH</h3>
+            <div class="score-display-row">
+                <div class="score-info-box" id="ctrl-blue-round-box" style="background: blue;">Điểm Vòng: 0</div>
+                <div class="score-info-box" id="ctrl-blue-total-box" style="background: blue;">Điểm Tổng: 0</div>
+            </div>
+            <div class="flex-row" style="margin-bottom: 12px;">
+                <input type="text" id="score-input-blue" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
+                <button onclick="modifyScore('blue', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
+                <button onclick="modifyScore('blue', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
+                <button onclick="modifyScore('blue', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+            </div>
+            <div class="flex-row" id="cards-row-blue"></div>
+        </div>
+
+        <div class="flex-row" style="margin-top: 25px; border-top: 2px dashed #ccc; padding-top: 15px; justify-content: center;">
+            <button onclick="resetAllScores('round')" style="background: purple; font-size: 16px; padding: 12px 25px;">Reset điểm vòng</button>
+            <button onclick="resetAllScores('total')" style="background: #ff00ff; font-size: 16px; padding: 12px 25px;">Reset điểm tổng</button>
+        </div>
+    </div>
+
     <script>
         var supabaseUrl = 'https://vjwwbzjzcbtkksehwfll.supabase.co';
         var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqd3diemp6Y2J0a2tzZWh3ZmxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NDIyOTYsImV4cCI6MjA5NTUxODI5Nn0.Zcn4hvlLtRirM-SPGrFvu3ivu8RYF9WngvbxCMCGfh4';
@@ -190,44 +279,28 @@
             sendEvent('toggle_item', { itemName, isShow });
         }
 
-        // --- LOGIC NÓN ĐẶC BIỆT ---
         let currentSpecialWedges = [];
 
         function shuffleSpecialWheel() {
             const prizeRadio = document.querySelector('input[name="specialPrize"]:checked').value;
             let wedges = [];
-
             if (prizeRadio === "he_so") {
-                // Tạo mảng theo chế độ Hệ số mới
                 wedges = [
-                    ...Array(6).fill("x1"),
-                    ...Array(5).fill("x2"),
-                    ...Array(4).fill("x3"),
-                    ...Array(3).fill("x4"),
-                    ...Array(3).fill("x5"),
-                    ...Array(2).fill("x10"),
-                    "x20"
+                    ...Array(6).fill("x1"), ...Array(5).fill("x2"), ...Array(4).fill("x3"),
+                    ...Array(3).fill("x4"), ...Array(3).fill("x5"), ...Array(2).fill("x10"), "x20"
                 ];
             } else {
-                // Tạo mảng theo chế độ Điểm số như cũ
                 const topPrize = parseInt(prizeRadio);
                 wedges = [
-                    ...Array(6).fill(30000),
-                    ...Array(5).fill(35000),
-                    ...Array(4).fill(40000),
-                    ...Array(3).fill(45000),
-                    ...Array(3).fill(50000),
-                    ...Array(2).fill(75000),
-                    topPrize
+                    ...Array(6).fill(30000), ...Array(5).fill(35000), ...Array(4).fill(40000),
+                    ...Array(3).fill(45000), ...Array(3).fill(50000), ...Array(2).fill(75000), topPrize
                 ];
             }
 
-            // Thuật toán xáo trộn mảng ngẫu nhiên
             for (let i = wedges.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [wedges[i], wedges[j]] = [wedges[j], wedges[i]];
             }
-
             currentSpecialWedges = wedges;
             renderGrid(wedges);
             sendEvent('shuffle_special', { wedges: wedges });
@@ -237,8 +310,6 @@
             const container = document.getElementById('specialGridContainer');
             container.innerHTML = '';
             if (!wedges || wedges.length === 0) return;
-
-            // Hàm trích xuất giá trị để tô màu định dạng theo độ lớn phần thưởng
             const parseVal = (v) => typeof v === 'string' ? parseInt(v.replace('x', '')) : v;
             const numericWedges = wedges.map(parseVal);
             const uniqueSorted = [...new Set(numericWedges)].sort((a, b) => b - a);
@@ -248,10 +319,8 @@
             wedges.forEach((val, index) => {
                 const cell = document.createElement('div');
                 cell.className = 'wedge-cell';
-                
-                let displayStr = typeof val === 'number' ? `${val.toLocaleString()} đ` : val;
+                let displayStr = typeof val === 'number' ? `${val.toLocaleString('vi-VN')} đ` : val;
                 cell.innerText = `Ô ${index + 1}\n${displayStr}`;
-
                 let currentNum = parseVal(val);
                 if (currentNum === highestVal) {
                     cell.style.backgroundColor = 'blue';
@@ -288,6 +357,103 @@
             `;
             container.appendChild(div);
         });
+
+        // --- HỆ THỐNG XỬ LÝ ĐIỂM SỐ & THẺ NGƯỜI CHƠI ---
+        let globalScores = {
+            redRound: 0, redTotal: 0,
+            yellowRound: 0, yellowTotal: 0,
+            blueRound: 0, blueTotal: 0
+        };
+
+        let playerCardsState = {
+            red: Array(11).fill(false),
+            yellow: Array(11).fill(false),
+            blue: Array(11).fill(false)
+        };
+
+        const playerCardNames = [
+            "Thẻ 1/2 (1)", "Thẻ 1/2 (2)", "Cơ Hội", "Kháng Mất Điểm", "10.000", 
+            "1 Triệu", "Thẻ Nhân Đôi", "Bảo Vệ", "Thẻ Thêm Lượt", "Ô Nhân Đôi", "Ô Thêm Lượt"
+        ];
+
+        // Hàm xử lý định dạng dấu chấm phân tách phần nghìn khi người dùng gõ
+        function formatNumberInput(input) {
+            let value = input.value.replace(/\D/g, "");
+            if (value === "") {
+                input.value = "";
+                return;
+            }
+            input.value = Number(value).toLocaleString('vi-VN');
+        }
+
+        function syncScoresToWheel() {
+            sendEvent('sync_scores', globalScores);
+            document.getElementById('ctrl-red-round-box').innerText = "Điểm Vòng: " + globalScores.redRound.toLocaleString('vi-VN');
+            document.getElementById('ctrl-red-total-box').innerText = "Điểm Tổng: " + globalScores.redTotal.toLocaleString('vi-VN');
+            document.getElementById('ctrl-yellow-round-box').innerText = "Điểm Vòng: " + globalScores.yellowRound.toLocaleString('vi-VN');
+            document.getElementById('ctrl-yellow-total-box').innerText = "Điểm Tổng: " + globalScores.yellowTotal.toLocaleString('vi-VN');
+            document.getElementById('ctrl-blue-round-box').innerText = "Điểm Vòng: " + globalScores.blueRound.toLocaleString('vi-VN');
+            document.getElementById('ctrl-blue-total-box').innerText = "Điểm Tổng: " + globalScores.blueTotal.toLocaleString('vi-VN');
+        }
+
+        function modifyScore(color, type, operation) {
+            const inputEl = document.getElementById(`score-input-${color}`);
+            // Loại bỏ tất cả dấu chấm trước khi tiến hành parse thành số nguyên xử lý tính toán
+            let cleanValue = inputEl.value.replace(/\./g, "");
+            let val = parseInt(cleanValue);
+            if (isNaN(val)) val = 0;
+
+            let key = color + type.charAt(0).toUpperCase() + type.slice(1);
+            if (operation === 'add') {
+                globalScores[key] += val;
+            } else if (operation === 'sub') {
+                globalScores[key] -= val;
+            }
+            syncScoresToWheel();
+            inputEl.value = '';
+        }
+
+        function resetAllScores(type) {
+            if (type === 'round') {
+                globalScores.redRound = 0;
+                globalScores.yellowRound = 0;
+                globalScores.blueRound = 0;
+            } else if (type === 'total') {
+                globalScores.redTotal = 0;
+                globalScores.yellowTotal = 0;
+                globalScores.blueTotal = 0;
+            }
+            syncScoresToWheel();
+        }
+
+        function togglePlayerCardState(color, cardIdx) {
+            let currentState = !playerCardsState[color][cardIdx];
+            playerCardsState[color][cardIdx] = currentState;
+
+            const btn = document.getElementById(`btn-card-${color}-${cardIdx}`);
+            if (currentState) btn.classList.add('active-status');
+            else btn.classList.remove('active-status');
+
+            sendEvent('toggle_player_card', { color, cardIdx, isActive: currentState });
+        }
+
+        function initPlayerCardControls(color) {
+            const pContainer = document.getElementById(`cards-row-${color}`);
+            pContainer.innerHTML = '';
+            playerCardNames.forEach((name, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `btn-card-${color}-${idx}`;
+                btn.className = 'btn-card-toggle';
+                btn.innerText = name;
+                btn.onclick = () => togglePlayerCardState(color, idx);
+                pContainer.appendChild(btn);
+            });
+        }
+
+        initPlayerCardControls('red');
+        initPlayerCardControls('yellow');
+        initPlayerCardControls('blue');
+        syncScoresToWheel();
 
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
