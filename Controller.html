@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controller</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-weight: bold !important;
+        }
+        body {
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        .section {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .grid-pointer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .grid-6x4 {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: purple;
+            color: white;
+            transition: 0.2s;
+        }
+        button:hover { background: orange !important; color: #fff !important; }
+        button.btn-off { background: #ff00ff; }
+        button.btn-off:hover { background: orange !important; color: #fff !important; }
+        
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 150px;
+        }
+        .item-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .pointer-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .wedge-cell {
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section">
+        <h2>Điều khiển Nón</h2>
+        <div class="flex-row">
+            <button onclick="toggleWheel('normal', true)">Hiện Nón</button>
+            <button class="btn-off" onclick="toggleWheel('normal', false)">Ẩn Nón</button>
+            <button onclick="toggleWheel('special', true)">Hiện Nón Đặc Biệt</button>
+            <button class="btn-off" onclick="toggleWheel('special', false)">Ẩn Nón Đặc Biệt</button>
+        </div>
+        <div class="flex-row" style="margin-top: 15px;">
+            <label>Thời gian quay (5-20s):</label>
+            <input type="number" id="spinTime" min="5" max="20" placeholder="VD: 10">
+            <button onclick="spinWheel()">Quay Nón</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Điều khiển Nón Đặc Biệt</h2>
+        <div class="flex-row">
+            <label><input type="radio" name="specialPrize" value="100000" checked> 100.000 điểm</label>
+            <label><input type="radio" name="specialPrize" value="1000000"> 1.000.000 điểm</label>
+            <label><input type="radio" name="specialPrize" value="he_so"> Hệ số</label>
+            <button onclick="shuffleSpecialWheel()" style="background: blue; color: white;">Xáo giá trị</button>
+            <button onclick="showValue()" style="background: green; color: white;">Hiện giá trị ô quay vào</button>
+            <button onclick="findHighestWedge()" style="background: red; color: white;">Tìm ô cao nhất</button>
+            <button onclick="hideValue()" style="background: yellow; color: #000;">Ẩn giá trị</button>
+        </div>
+        
+        <h3 style="margin-top: 20px; margin-bottom: 5px;">Sơ đồ 24 ô Nón Đặc Biệt</h3>
+        <div class="grid-6x4" id="specialGridContainer"></div>
+    </div>
+
+    <div class="section">
+        <h2>Điều khiển Đèn Kim</h2>
+        <div class="grid-pointer">
+            <div class="pointer-control" style="background-color: red; color: #fff;">
+                <span>Kim Đỏ:</span>
+                <button onclick="setPointer('red', 'on')" style="background: green;">Mở</button>
+                <button class="btn-off" onclick="setPointer('red', 'off')">Đóng</button>
+            </div>
+            <div class="pointer-control" style="background-color: yellow; color: #000;">
+                <span>Kim Vàng:</span>
+                <button onclick="setPointer('yellow', 'on')" style="background: green;">Mở</button>
+                <button class="btn-off" onclick="setPointer('yellow', 'off')">Đóng</button>
+            </div>
+            <div class="pointer-control" style="background-color: blue; color: #fff;">
+                <span>Kim Xanh:</span>
+                <button onclick="setPointer('blue', 'on')" style="background: green;">Mở</button>
+                <button class="btn-off" onclick="setPointer('blue', 'off')">Đóng</button>
+            </div>
+            <div class="pointer-control" style="background-color: purple; color: #fff;">
+                <span>Zoom Kim:</span>
+                <button onclick="zoomPointer('in')" style="background: green; color: white;">Ease in</button>
+                <button onclick="zoomPointer('out')" style="background: #ff00ff; color: white;">Ease out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Hiển thị Thẻ & Ô</h2>
+        <div class="grid-4" id="itemsContainer"></div>
+    </div>
+
+    <script>
+        var supabaseUrl = 'https://vjwwbzjzcbtkksehwfll.supabase.co';
+        var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqd3diemp6Y2J0a2tzZWh3ZmxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NDIyOTYsImV4cCI6MjA5NTUxODI5Nn0.Zcn4hvlLtRirM-SPGrFvu3ivu8RYF9WngvbxCMCGfh4';
+        var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        const channel = supabase.channel('wheel_room', {
+            config: { broadcast: { self: true } }
+        });
+        channel.subscribe();
+
+        function sendEvent(eventName, payloadData) {
+            channel.send({
+                type: 'broadcast',
+                event: eventName,
+                payload: payloadData
+            });
+            localStorage.setItem('local_wheel_cmd', JSON.stringify({
+                event: eventName,
+                ...payloadData
+            }));
+        }
+
+        function toggleWheel(type, isShow) {
+            sendEvent('toggle_wheel', { type, isShow });
+        }
+
+        function spinWheel() {
+            const timeInput = document.getElementById('spinTime').value;
+            let duration = parseInt(timeInput);
+            if (isNaN(duration) || duration < 5 || duration > 20) {
+                duration = Math.floor(Math.random() * (20 - 5 + 1)) + 5;
+                document.getElementById('spinTime').value = duration; 
+            }
+            sendEvent('spin_wheel', { duration });
+        }
+
+        function setPointer(pointerName, state) {
+            sendEvent('pointer_light', { pointerName, state });
+        }
+
+        function zoomPointer(type) {
+            sendEvent('zoom_pointer', { type });
+        }
+
+        function toggleItem(itemName, isShow) {
+            sendEvent('toggle_item', { itemName, isShow });
+        }
+
+        // --- LOGIC NÓN ĐẶC BIỆT ---
+        let currentSpecialWedges = [];
+
+        function shuffleSpecialWheel() {
+            const prizeRadio = document.querySelector('input[name="specialPrize"]:checked').value;
+            let wedges = [];
+
+            if (prizeRadio === "he_so") {
+                // Tạo mảng theo chế độ Hệ số mới
+                wedges = [
+                    ...Array(6).fill("x1"),
+                    ...Array(5).fill("x2"),
+                    ...Array(4).fill("x3"),
+                    ...Array(3).fill("x4"),
+                    ...Array(3).fill("x5"),
+                    ...Array(2).fill("x10"),
+                    "x20"
+                ];
+            } else {
+                // Tạo mảng theo chế độ Điểm số như cũ
+                const topPrize = parseInt(prizeRadio);
+                wedges = [
+                    ...Array(6).fill(30000),
+                    ...Array(5).fill(35000),
+                    ...Array(4).fill(40000),
+                    ...Array(3).fill(45000),
+                    ...Array(3).fill(50000),
+                    ...Array(2).fill(75000),
+                    topPrize
+                ];
+            }
+
+            // Thuật toán xáo trộn mảng ngẫu nhiên
+            for (let i = wedges.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [wedges[i], wedges[j]] = [wedges[j], wedges[i]];
+            }
+
+            currentSpecialWedges = wedges;
+            renderGrid(wedges);
+            sendEvent('shuffle_special', { wedges: wedges });
+        }
+
+        function renderGrid(wedges) {
+            const container = document.getElementById('specialGridContainer');
+            container.innerHTML = '';
+            if (!wedges || wedges.length === 0) return;
+
+            // Hàm trích xuất giá trị để tô màu định dạng theo độ lớn phần thưởng
+            const parseVal = (v) => typeof v === 'string' ? parseInt(v.replace('x', '')) : v;
+            const numericWedges = wedges.map(parseVal);
+            const uniqueSorted = [...new Set(numericWedges)].sort((a, b) => b - a);
+            const highestVal = uniqueSorted[0];
+            const secondHighestVal = uniqueSorted[1];
+
+            wedges.forEach((val, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'wedge-cell';
+                
+                let displayStr = typeof val === 'number' ? `${val.toLocaleString()} đ` : val;
+                cell.innerText = `Ô ${index + 1}\n${displayStr}`;
+
+                let currentNum = parseVal(val);
+                if (currentNum === highestVal) {
+                    cell.style.backgroundColor = 'blue';
+                    cell.style.color = 'white';
+                } else if (currentNum === secondHighestVal) {
+                    cell.style.backgroundColor = 'green';
+                    cell.style.color = 'white';
+                } else {
+                    cell.style.backgroundColor = 'yellow';
+                    cell.style.color = 'black';
+                }
+                container.appendChild(cell);
+            });
+        }
+
+        function showValue() { sendEvent('show_value', {}); }
+        function hideValue() { sendEvent('hide_value', {}); }
+        function findHighestWedge() { sendEvent('find_highest', {}); }
+
+        const itemsList = [
+            "Thẻ Phần thưởng", "Thẻ 1/2 thứ 1", "Thẻ 1/2 thứ 2", "Thẻ Cơ hội", "Thẻ Nhân Đôi", "Thẻ Kháng Mất điểm", "Thẻ Bảo vệ", "Thẻ Thêm lượt",
+            "Ô Độc đắc", "Ô Ẩn số", "Ô Bí Mật 1", "Ô Bí Mật 2", "Ô Siêu Tốc", "Ô Thêm lượt", "Ô Két sắt", "Ô Nhân đôi", "Ô 1 Triệu", "Ô 1.000", "Ô 2.500", "Ô 3.500", "Ô 4.000", "Ô 5.000", "Ô Mất điểm"
+        ];
+        const container = document.getElementById('itemsContainer');
+        itemsList.forEach(function(item) {
+            const div = document.createElement('div');
+            div.className = 'item-card';
+            div.innerHTML = `
+                <div style="margin-bottom: 10px;">${item}</div>
+                <div class="flex-row" style="justify-content: center;">
+                    <button style="padding: 5px 10px; font-size: 12px;" onclick="toggleItem('${item}', true)">Hiện</button>
+                    <button style="padding: 5px 10px; font-size: 12px;" class="btn-off" onclick="toggleItem('${item}', false)">Ẩn</button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123) e.preventDefault();
+            if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
