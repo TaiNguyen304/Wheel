@@ -239,8 +239,8 @@
             transition: background 0.3s, color 0.3s;
         }
         .card-slot.active {
-            background: #39ff14 !important;
-            color: #000000 !important;
+            background: green !important;
+            color: white !important;
             border-color: #000000;
         }
     </style>
@@ -281,8 +281,8 @@
     <div class="players-scoreboard">
         <div class="player-row row-red" id="row-red">
             <div class="score-boxes">
-                <div class="score-box" id="display-red-round">Vòng: 0</div>
-                <div class="score-box" id="display-red-total">Tổng: 0</div>
+                <div class="score-box" id="display-red-round">0</div>
+                <div class="score-box" id="display-red-total">0</div>
             </div>
             <div class="cards-grid">
                 <div class="cards-line">
@@ -305,8 +305,8 @@
 
         <div class="player-row row-yellow" id="row-yellow">
             <div class="score-boxes">
-                <div class="score-box" id="display-yellow-round">Vòng: 0</div>
-                <div class="score-box" id="display-yellow-total">Tổng: 0</div>
+                <div class="score-box" id="display-yellow-round">0</div>
+                <div class="score-box" id="display-yellow-total">0</div>
             </div>
             <div class="cards-grid">
                 <div class="cards-line">
@@ -329,8 +329,8 @@
 
         <div class="player-row row-blue" id="row-blue">
             <div class="score-boxes">
-                <div class="score-box" id="display-blue-round">Vòng: 0</div>
-                <div class="score-box" id="display-blue-total">Tổng: 0</div>
+                <div class="score-box" id="display-blue-round">0</div>
+                <div class="score-box" id="display-blue-total">0</div>
             </div>
             <div class="cards-grid">
                 <div class="cards-line">
@@ -514,12 +514,12 @@
 
         // ĐỒNG BỘ ĐIỂM SỐ VÀ THẺ
         function executeUpdateScores(scores) {
-            document.getElementById('display-red-round').innerText = "Vòng: " + scores.redRound.toLocaleString();
-            document.getElementById('display-red-total').innerText = "Tổng: " + scores.redTotal.toLocaleString();
-            document.getElementById('display-yellow-round').innerText = "Vòng: " + scores.yellowRound.toLocaleString();
-            document.getElementById('display-yellow-total').innerText = "Tổng: " + scores.yellowTotal.toLocaleString();
-            document.getElementById('display-blue-round').innerText = "Vòng: " + scores.blueRound.toLocaleString();
-            document.getElementById('display-blue-total').innerText = "Tổng: " + scores.blueTotal.toLocaleString();
+            document.getElementById('display-red-round').innerText = scores.redRound.toLocaleString();
+            document.getElementById('display-red-total').innerText = scores.redTotal.toLocaleString();
+            document.getElementById('display-yellow-round').innerText = scores.yellowRound.toLocaleString();
+            document.getElementById('display-yellow-total').innerText = scores.yellowTotal.toLocaleString();
+            document.getElementById('display-blue-round').innerText = scores.blueRound.toLocaleString();
+            document.getElementById('display-blue-total').innerText = scores.blueTotal.toLocaleString();
         }
 
         function executeUpdatePlayerCard(color, cardIdx, isActive) {
