@@ -444,9 +444,9 @@
 
         function executeResetRotation() {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            currentRotation = 97.5;
+            currentRotation = 262.5;
             wheelGraphic.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            wheelGraphic.style.transform = 'rotate(97.5deg)';
+            wheelGraphic.style.transform = 'rotate(262.5deg)';
             specialValuePopup.style.display = 'none';
             setTimeout(saveWheelState, 600);
         }
