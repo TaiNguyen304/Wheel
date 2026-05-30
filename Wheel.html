@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head> 
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wheel</title>
@@ -11,6 +12,7 @@
             font-family: sans-serif;
             font-weight: bold !important;
         }
+
         body {
             margin: 0;
             padding: 20px;
@@ -23,7 +25,7 @@
             overflow: hidden;
             gap: 40px;
         }
-        
+
         .wheel-area {
             display: flex;
             justify-content: center;
@@ -32,13 +34,9 @@
             width: 600px;
             height: 600px;
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: center top; 
+            transform-origin: center top;
             margin-left: 20px;
             flex-shrink: 0;
-        }
-
-        .wheel-area.zoomed {
-            transform: scale(1.6) translateX(40px) translateY(30px);
         }
 
         .wheel-container {
@@ -57,7 +55,7 @@
             background-repeat: no-repeat;
             transition-property: transform;
             transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             display: block;
             background-image: url('./Nón.png');
             position: relative;
@@ -74,7 +72,7 @@
             font-size: 26px;
             border-radius: 8px;
             border: 3px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
             z-index: 999;
             display: none;
             text-align: center;
@@ -90,6 +88,7 @@
             pointer-events: none;
             z-index: 2;
         }
+
         .placed-item {
             position: absolute;
             top: 0;
@@ -97,15 +96,15 @@
             width: 100%;
             height: 100%;
             transform-origin: center center;
-            display: none; 
+            display: none;
         }
-        
+
         .placed-item img {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            object-fit: fill; 
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
+            object-fit: fill;
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
         }
 
         .placed-item.is-card img {
@@ -127,31 +126,33 @@
         /* ĐÃ SỬA CÂN BẰNG TUYỆT ĐỐI VÒNG CHẤM TRÒN */
         .dots-ring {
             position: absolute;
-            top: 0; 
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: 5;
         }
+
         .dot-wrapper {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            transform-origin: center center; 
+            transform-origin: center center;
         }
+
         .dot {
             position: absolute;
-            width: 8px; 
+            width: 8px;
             height: 8px;
             background-color: #ffffff;
             border-radius: 50%;
-            top: 3.5px; 
+            top: 3.5px;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
         }
 
         .pointer-wrapper {
@@ -164,22 +165,42 @@
             z-index: 10;
             pointer-events: none;
         }
-        
-        .wrapper-red { transform: rotate(-30deg); }
-        .wrapper-yellow { transform: rotate(0deg); }
-        .wrapper-blue { transform: rotate(30deg); }
+
+        .wrapper-red {
+            transform: rotate(-30deg);
+        }
+
+        .wrapper-yellow {
+            transform: rotate(0deg);
+        }
+
+        .wrapper-blue {
+            transform: rotate(30deg);
+        }
 
         .pointer-body {
             position: absolute;
-            top: -57.5px; 
+            top: -57.5px;
             left: 50%;
             transform: translateX(-50%);
-            filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4));
+            filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.4));
         }
-        .pointer-body svg path { transition: fill 0.2s; }
-        #pointer-red { --p-color: #FFFFFF; }
-        #pointer-yellow { --p-color: #FFFFFF; }
-        #pointer-blue { --p-color: #FFFFFF; }
+
+        .pointer-body svg path {
+            transition: fill 0.2s;
+        }
+
+        #pointer-red {
+            --p-color: #FFFFFF;
+        }
+
+        #pointer-yellow {
+            --p-color: #FFFFFF;
+        }
+
+        #pointer-blue {
+            --p-color: #FFFFFF;
+        }
 
         .players-scoreboard {
             flex-grow: 1;
@@ -188,17 +209,20 @@
             gap: 25px;
             max-width: 650px;
         }
+
         .player-row {
             background: rgba(255, 255, 255, 0.08);
             padding: 15px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
+
         .score-boxes {
             display: flex;
             gap: 15px;
             margin-bottom: 12px;
         }
+
         .score-box {
             flex: 1;
             padding: 12px;
@@ -206,22 +230,37 @@
             text-align: center;
             border-radius: 8px;
             border: 2px solid white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
-        .row-red .score-box { background: #ff0000; color: #ffffff; }
-        .row-yellow .score-box { background: #ffff00; color: #000000; border-color: #000000; }
-        .row-blue .score-box { background: #0000ff; color: #ffffff; }
+
+        .row-red .score-box {
+            background: #ff0000;
+            color: #ffffff;
+        }
+
+        .row-yellow .score-box {
+            background: #ffff00;
+            color: #000000;
+            border-color: #000000;
+        }
+
+        .row-blue .score-box {
+            background: #0000ff;
+            color: #ffffff;
+        }
 
         .cards-grid {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
+
         .cards-line {
             display: flex;
             gap: 6px;
             justify-content: space-between;
         }
+
         .card-slot {
             flex: 1;
             padding: 8px 4px;
@@ -230,12 +269,13 @@
             border-radius: 5px;
             background: #000000;
             color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             transition: background 0.3s, color 0.3s;
         }
+
         .card-slot.active {
             background: green !important;
             color: white !important;
@@ -243,6 +283,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="wheel-area" id="wheelArea">
@@ -255,21 +296,24 @@
             <div class="pointer-wrapper wrapper-red">
                 <div class="pointer-body" id="pointer-red">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
-                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)"
+                            stroke="white" stroke-width="2" stroke-linejoin="round" />
                     </svg>
                 </div>
             </div>
             <div class="pointer-wrapper wrapper-yellow">
                 <div class="pointer-body" id="pointer-yellow">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
-                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)"
+                            stroke="white" stroke-width="2" stroke-linejoin="round" />
                     </svg>
                 </div>
             </div>
             <div class="pointer-wrapper wrapper-blue">
                 <div class="pointer-body" id="pointer-blue">
                     <svg width="46" height="60" viewBox="0 0 46 60" style="display: block;">
-                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M23,60 C9,38 0,28 0,18 A23,18 0 0,1 46,18 C46,28 37,38 23,60 Z" fill="var(--p-color)"
+                            stroke="white" stroke-width="2" stroke-linejoin="round" />
                     </svg>
                 </div>
             </div>
@@ -419,6 +463,56 @@
             dotsRing.appendChild(wrapper);
         }
 
+        function saveWheelState() {
+            const state = {
+                currentRotation: currentRotation,
+                isSpecialMode: isSpecialMode,
+                specialWedges: specialWedges,
+                wheelDisplay: wheelGraphic.style.display,
+                wheelBg: wheelGraphic.style.backgroundImage,
+                zoomed: wheelArea.classList.contains('zoomed'),
+                popupDisplay: specialValuePopup.style.display,
+                popupText: specialValuePopup.innerText,
+                itemsState: {}
+            };
+            Object.keys(itemsPlacementConfig).forEach(itemName => {
+                const targetId = 'render-item-' + itemName.replace(/\s+/g, '_');
+                const el = document.getElementById(targetId);
+                if (el) state.itemsState[itemName] = el.style.display;
+            });
+            localStorage.setItem('wheel_last_state', JSON.stringify(state));
+        }
+
+        function loadWheelState() {
+            const saved = localStorage.getItem('wheel_last_state');
+            if (!saved) return;
+            try {
+                const state = JSON.parse(saved);
+                currentRotation = state.currentRotation || 0;
+                isSpecialMode = state.isSpecialMode || false;
+                specialWedges = state.specialWedges || [];
+                
+                wheelGraphic.style.transition = 'none';
+                wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
+                wheelGraphic.style.display = state.wheelDisplay || 'block';
+                wheelGraphic.style.backgroundImage = state.wheelBg || "url('./Nón.png')";
+                
+                if (state.zoomed) wheelArea.classList.add('zoomed');
+                else wheelArea.classList.remove('zoomed');
+                
+                specialValuePopup.style.display = state.popupDisplay || 'none';
+                specialValuePopup.innerText = state.popupText || '0 điểm';
+
+                if (state.itemsState) {
+                    Object.keys(state.itemsState).forEach(itemName => {
+                        const targetId = 'render-item-' + itemName.replace(/\s+/g, '_');
+                        const el = document.getElementById(targetId);
+                        if (el) el.style.display = state.itemsState[itemName];
+                    });
+                }
+            } catch(e) { console.error(e); }
+        }
+
         function executeToggleItem(itemName, isShow) {
             if (itemName === "Ô 5.000") return; 
             const targetId = 'render-item-' + itemName.replace(/\s+/g, '_');
@@ -426,11 +520,13 @@
             if (itemElement) {
                 itemElement.style.display = isShow ? 'block' : 'none';
             }
+            saveWheelState();
         }
 
         function executeToggleWheel(type, isShow) {
             if (!isShow) {
                 wheelGraphic.style.display = 'none';
+                saveWheelState();
                 return;
             }
             wheelGraphic.style.display = 'block';
@@ -442,16 +538,71 @@
                 isSpecialMode = false;
                 specialValuePopup.style.display = 'none';
             }
+            saveWheelState();
         }
 
-        function executeSpin(duration) {
+        // BIẾN TOÀN CỤC PHỤ TRÁCH THỰC HIỆN ĐỒNG BỘ MƯỢT MÀ THEO FRAME THỜI GIAN
+        let animationFrameId = null;
+
+        function executeSpin(duration, randomOffset, startTime) {
+            // Hủy animation cũ nếu có lệnh mới đè lên
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
+            const offset = (typeof randomOffset !== 'undefined') ? randomOffset : Math.floor(Math.random() * 360);
             const extraSpins = duration * 360; 
-            const randomOffset = Math.floor(Math.random() * 360);
-            currentRotation += extraSpins + randomOffset;
             
-            wheelGraphic.style.transitionDuration = duration + 's';
-            wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
-            specialValuePopup.style.display = 'none'; 
+            const startRot = currentRotation;
+            const targetRot = currentRotation + extraSpins + offset;
+            currentRotation = targetRot; 
+            specialValuePopup.style.display = 'none';
+
+            const startTimestamp = startTime || Date.now();
+            const durationMs = duration * 1000;
+
+            // Định nghĩa hàm mô phỏng chính xác cubic-bezier(0.25, 1, 0.5, 1) của CSS
+            // Đảm bảo cả hai tab dù xử lý lệch mili giây vẫn cho ra kết quả tọa độ xoay y hệt nhau tại cùng một thời điểm máy tính
+            function easeOutCubicBezier(t) {
+                // Sử dụng công thức toán học tính mượt điểm dừng tương ứng cubic-bezier
+                return 1 - Math.pow(1 - t, 3);
+            }
+
+            function updateProgress() {
+                const now = Date.now();
+                const elapsed = now - startTimestamp;
+
+                if (elapsed >= durationMs) {
+                    // Đã chạy hết thời gian quay -> Đưa thẳng tới đích và dừng hẳn
+                    wheelGraphic.style.transition = 'none';
+                    wheelGraphic.style.transform = `rotate(${targetRot}deg)`;
+                    saveWheelState();
+                    animationFrameId = null;
+                } else {
+                    if (elapsed < 0) {
+                        // Phòng trường hợp sai lệch đồng hồ hệ thống cực nhỏ giữa các luồng xử lý
+                        wheelGraphic.style.transform = `rotate(${startRot}deg)`;
+                    } else {
+                        const t = elapsed / durationMs;
+                        const progress = easeOutCubicBezier(t);
+                        const currentPos = startRot + (targetRot - startRot) * progress;
+                        
+                        wheelGraphic.style.transition = 'none';
+                        wheelGraphic.style.transform = `rotate(${currentPos}deg)`;
+                    }
+                    animationFrameId = requestAnimationFrame(updateProgress);
+                }
+            }
+
+            // Bắt đầu chu kỳ render mượt mà đồng bộ thời gian thực
+            animationFrameId = requestAnimationFrame(updateProgress);
+        }
+
+        function executeResetRotation() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            currentRotation = 97.5;
+            wheelGraphic.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            wheelGraphic.style.transform = 'rotate(97.5deg)';
+            specialValuePopup.style.display = 'none';
+            setTimeout(saveWheelState, 600);
         }
 
         function executePointerLight(pointerName, state) {
@@ -481,14 +632,21 @@
             if (!isSpecialMode) return;
             specialValuePopup.innerText = getWedgeValueAtYellowPointer();
             specialValuePopup.style.display = 'block';
+            saveWheelState();
         }
 
         function executeHideValue() {
             specialValuePopup.style.display = 'none';
+            saveWheelState();
         }
 
-        function executeFindHighest() {
+        function executeFindHighest(startTime) {
+            // Hủy chuỗi animation cũ nếu có để tránh xung đột luồng quay
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            
             if (!isSpecialMode || specialWedges.length === 0) return;
+
+            // 1. Thuật toán tìm vị trí ô có giá trị lớn nhất (Giữ nguyên logic gốc của bạn)
             const parseVal = (v) => typeof v === 'string' ? parseInt(v.replace('x', '')) : v;
             let numericValues = specialWedges.map(parseVal);
             let maxVal = Math.max(...numericValues);
@@ -497,17 +655,56 @@
             let currentNormalized = currentRotation % 360;
             let targetAngleDiff = (360 - targetCenterAngle) - currentNormalized;
             if (targetAngleDiff <= 0) targetAngleDiff += 360;
-            currentRotation += targetAngleDiff + 1080;
 
-            wheelGraphic.style.transitionDuration = '4s';
-            wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
+            // 2. Thiết lập thông số quay (Quay thêm 3 vòng = 1080 độ trong 4 giây)
+            const startRot = currentRotation;
+            const targetRot = currentRotation + targetAngleDiff + 1080;
+            currentRotation = targetRot; // Cập nhật góc đích cuối cùng cho biến toàn cục
+
             specialValuePopup.style.display = 'none';
 
-            setTimeout(() => {
-                let realValue = specialWedges[targetIndex];
-                specialValuePopup.innerText = typeof realValue === 'number' ? realValue.toLocaleString() + " điểm" : realValue;
-                specialValuePopup.style.display = 'block';
-            }, 4200);
+            // 3. Cấu hình mốc thời gian thực đồng bộ tuyệt đối
+            const startTimestamp = startTime || Date.now();
+            const durationMs = 4000; // Thời gian quay cố định là 4 giây (4000ms)
+
+            function easeOutCubicBezier(t) {
+                return 1 - Math.pow(1 - t, 3); // Hàm nội suy cubic-bezier(0.25, 1, 0.5, 1) mượt mà
+            }
+
+            function updateFindHighestProgress() {
+                const now = Date.now();
+                const elapsed = now - startTimestamp;
+
+                if (elapsed >= durationMs) {
+                    // Khi đã hết thời gian 4 giây -> Đưa nón về đích chính xác và kết thúc animation
+                    wheelGraphic.style.transition = 'none';
+                    wheelGraphic.style.transform = `rotate(${targetRot}deg)`;
+                    
+                    // Hiển thị popup điểm số ô cao nhất
+                    let realValue = specialWedges[targetIndex];
+                    specialValuePopup.innerText = typeof realValue === 'number' ? realValue.toLocaleString() + " điểm" : realValue;
+                    specialValuePopup.style.display = 'block';
+                    
+                    saveWheelState();
+                    animationFrameId = null;
+                } else {
+                    if (elapsed < 0) {
+                        wheelGraphic.style.transform = `rotate(${startRot}deg)`;
+                    } else {
+                        // Tính toán góc quay chính xác dựa trên thời gian thực trôi qua
+                        const t = elapsed / durationMs;
+                        const progress = easeOutCubicBezier(t);
+                        const currentPos = startRot + (targetRot - startRot) * progress;
+                        
+                        wheelGraphic.style.transition = 'none';
+                        wheelGraphic.style.transform = `rotate(${currentPos}deg)`;
+                    }
+                    animationFrameId = requestAnimationFrame(updateFindHighestProgress);
+                }
+            }
+
+            // Bắt đầu vòng lặp render đồng bộ
+            animationFrameId = requestAnimationFrame(updateFindHighestProgress);
         }
 
         function executeUpdateScores(scores) {
@@ -529,57 +726,89 @@
             }
         }
 
+        loadWheelState();
+
         try {
             const channel = supabase.channel('wheel_room');
             channel.on('broadcast', { event: 'toggle_wheel' }, function(payload) {
                 executeToggleWheel(payload.payload.type, payload.payload.isShow);
             }).on('broadcast', { event: 'spin_wheel' }, function(payload) {
-                executeSpin(payload.payload.duration);
+                executeSpin(payload.payload.duration, payload.payload.randomOffset, payload.payload.startTime);
             }).on('broadcast', { event: 'pointer_light' }, function(payload) {
                 executePointerLight(payload.payload.pointerName, payload.payload.state);
             }).on('broadcast', { event: 'zoom_pointer' }, function(payload) {
                 if (payload.payload.type === 'in') wheelArea.classList.add('zoomed');
                 else wheelArea.classList.remove('zoomed');
+                saveWheelState();
             }).on('broadcast', { event: 'toggle_item' }, function(payload) {
                 executeToggleItem(payload.payload.itemName, payload.payload.isShow);
             }).on('broadcast', { event: 'shuffle_special' }, function(payload) {
                 specialWedges = payload.payload.wedges;
                 specialValuePopup.style.display = 'none';
+                saveWheelState();
             }).on('broadcast', { event: 'show_value' }, function() {
                 executeShowValue();
             }).on('broadcast', { event: 'hide_value' }, function() {
                 executeHideValue();
             }).on('broadcast', { event: 'find_highest' }, function() {
-                executeFindHighest();
+                executeFindHighest(payload.payload.startTime);
             }).on('broadcast', { event: 'sync_scores' }, function(payload) {
                 executeUpdateScores(payload.payload);
             }).on('broadcast', { event: 'toggle_player_card' }, function(payload) {
                 executeUpdatePlayerCard(payload.payload.color, payload.payload.cardIdx, payload.payload.isActive);
-            }).subscribe();
-        } catch (e) {
-            // Thực thi im lặng
-        }
+            }).on('broadcast', { event: 'reset_rotation' }, function() {
+                executeResetRotation();
+            }).subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    channel.send({ event: 'request_sync', type: 'broadcast', payload: {} });
+                }
+            });
+
+            channel.on('broadcast', { event: 'request_sync' }, function() {
+                const saved = localStorage.getItem('wheel_last_state');
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    channel.send({
+                        event: 'spin_wheel_sync',
+                        type: 'broadcast',
+                        payload: { rotation: state.currentRotation, isSpecialMode: state.isSpecialMode, wedges: state.specialWedges }
+                    });
+                }
+            }).on('broadcast', { event: 'spin_wheel_sync' }, function(payload) {
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                currentRotation = payload.payload.rotation;
+                isSpecialMode = payload.payload.isSpecialMode;
+                specialWedges = payload.payload.wedges;
+                wheelGraphic.style.transition = 'none';
+                wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
+                saveWheelState();
+            });
+
+        } catch (e) { }
 
         window.addEventListener('storage', function(e) {
             if (e.key === 'local_wheel_cmd') {
                 const data = JSON.parse(e.newValue);
                 if (data.event === 'toggle_item') executeToggleItem(data.itemName, data.isShow);
                 if (data.event === 'toggle_wheel') executeToggleWheel(data.type, data.isShow);
-                if (data.event === 'spin_wheel') executeSpin(data.duration);
+                if (data.event === 'spin_wheel') executeSpin(data.duration, data.randomOffset, data.startTime);
                 if (data.event === 'pointer_light') executePointerLight(data.pointerName, data.state);
                 if (data.event === 'zoom_pointer') {
                     if (data.type === 'in') wheelArea.classList.add('zoomed');
                     else wheelArea.classList.remove('zoomed');
+                    saveWheelState();
                 }
                 if (data.event === 'shuffle_special') {
                     specialWedges = data.wedges;
                     specialValuePopup.style.display = 'none';
+                    saveWheelState();
                 }
                 if (data.event === 'show_value') executeShowValue();
                 if (data.event === 'hide_value') executeHideValue();
-                if (data.event === 'find_highest') executeFindHighest();
+                if (data.event === 'find_highest') executeFindHighest(data.startTime);
                 if (data.event === 'sync_scores') executeUpdateScores(data);
                 if (data.event === 'toggle_player_card') executeUpdatePlayerCard(data.color, data.cardIdx, data.isActive);
+                if (data.event === 'reset_rotation') executeResetRotation();
             }
         });
 
@@ -592,4 +821,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head> 
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controller</title>
@@ -11,31 +12,46 @@
             font-family: sans-serif;
             font-weight: bold !important;
         }
+
         body {
             padding: 20px;
             background-color: #f0f2f5;
         }
+
         .section {
             background: white;
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .grid-pointer {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
         }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
         .grid-6x4 {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 10px;
             margin-top: 15px;
         }
-        .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        
+
+        .flex-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         button {
             padding: 10px 15px;
             border: none;
@@ -45,22 +61,36 @@
             color: white;
             transition: 0.2s;
         }
-        button:hover { background: orange !important; color: #fff !important; }
-        button.btn-off { background: #ff00ff; }
-        button.btn-off:hover { background: orange !important; color: #fff !important; }
-        
-        input[type="number"], input[type="text"] {
+
+        button:hover {
+            background: orange !important;
+            color: #fff !important;
+        }
+
+        button.btn-off {
+            background: #ff00ff;
+        }
+
+        button.btn-off:hover {
+            background: orange !important;
+            color: #fff !important;
+        }
+
+        input[type="number"],
+        input[type="text"] {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             width: 150px;
         }
+
         .item-card {
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 5px;
             text-align: center;
         }
+
         .pointer-control {
             display: flex;
             align-items: center;
@@ -69,6 +99,7 @@
             border: 1px solid #eee;
             border-radius: 5px;
         }
+
         .wedge-cell {
             padding: 12px;
             text-align: center;
@@ -84,15 +115,25 @@
             margin-top: 15px;
             border-radius: 8px;
         }
-        .block-red { border-color: red; }
-        .block-yellow { border-color: yellow; }
-        .block-blue { border-color: blue; }
+
+        .block-red {
+            border-color: red;
+        }
+
+        .block-yellow {
+            border-color: yellow;
+        }
+
+        .block-blue {
+            border-color: blue;
+        }
 
         .score-display-row {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
         }
+
         .score-info-box {
             padding: 10px 20px;
             font-size: 18px;
@@ -101,18 +142,21 @@
             min-width: 160px;
             text-align: center;
         }
+
         .btn-card-toggle {
             padding: 6px 10px;
             font-size: 11px;
             background: #333;
             border: 1px solid #fff;
         }
+
         .btn-card-toggle.active-status {
             background: #008000 !important;
             color: #fff !important;
         }
     </style>
 </head>
+
 <body>
 
     <div class="section">
@@ -122,6 +166,8 @@
             <button class="btn-off" onclick="toggleWheel('normal', false)">Ẩn Nón</button>
             <button onclick="toggleWheel('special', true)">Hiện Nón Đặc Biệt</button>
             <button class="btn-off" onclick="toggleWheel('special', false)">Ẩn Nón Đặc Biệt</button>
+            <button onclick="resetWheelRotation()" style="background-color: #800080; color: white;">Reset Góc
+                Quay</button>
         </div>
         <div class="flex-row" style="margin-top: 15px;">
             <label>Thời gian quay (5-20s):</label>
@@ -141,7 +187,7 @@
             <button onclick="findHighestWedge()" style="background: red; color: white;">Tìm ô cao nhất</button>
             <button onclick="hideValue()" style="background: yellow; color: #000;">Ẩn giá trị</button>
         </div>
-        
+
         <h3 style="margin-top: 20px; margin-bottom: 5px;">Sơ đồ 24 ô Nón Đặc Biệt</h3>
         <div class="grid-6x4" id="specialGridContainer"></div>
     </div>
@@ -188,9 +234,12 @@
             </div>
             <div class="flex-row" style="margin-bottom: 12px;">
                 <input type="text" id="score-input-red" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
-                <button onclick="modifyScore('red', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
-                <button onclick="modifyScore('red', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
-                <button onclick="modifyScore('red', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+                <button onclick="modifyScore('red', 'total', 'add')" style="background: blue; color: white;">Tổng
+                    +</button>
+                <button onclick="modifyScore('red', 'round', 'add')" style="background: yellow; color: black;">Vòng
+                    +</button>
+                <button onclick="modifyScore('red', 'round', 'sub')" style="background: red; color: white;">Vòng
+                    -</button>
             </div>
             <div class="flex-row" id="cards-row-red"></div>
         </div>
@@ -198,14 +247,19 @@
         <div class="player-control-block block-yellow">
             <h3 style="color: yellow; margin-top: 0;">NC VÀNG</h3>
             <div class="score-display-row">
-                <div class="score-info-box" id="ctrl-yellow-round-box" style="background: yellow; color: #000;">Điểm Vòng: 0</div>
-                <div class="score-info-box" id="ctrl-yellow-total-box" style="background: yellow; color: #000;">Điểm Tổng: 0</div>
+                <div class="score-info-box" id="ctrl-yellow-round-box" style="background: yellow; color: #000;">Điểm
+                    Vòng: 0</div>
+                <div class="score-info-box" id="ctrl-yellow-total-box" style="background: yellow; color: #000;">Điểm
+                    Tổng: 0</div>
             </div>
             <div class="flex-row" style="margin-bottom: 12px;">
                 <input type="text" id="score-input-yellow" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
-                <button onclick="modifyScore('yellow', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
-                <button onclick="modifyScore('yellow', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
-                <button onclick="modifyScore('yellow', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+                <button onclick="modifyScore('yellow', 'total', 'add')" style="background: blue; color: white;">Tổng
+                    +</button>
+                <button onclick="modifyScore('yellow', 'round', 'add')" style="background: yellow; color: black;">Vòng
+                    +</button>
+                <button onclick="modifyScore('yellow', 'round', 'sub')" style="background: red; color: white;">Vòng
+                    -</button>
             </div>
             <div class="flex-row" id="cards-row-yellow"></div>
         </div>
@@ -218,16 +272,22 @@
             </div>
             <div class="flex-row" style="margin-bottom: 12px;">
                 <input type="text" id="score-input-blue" placeholder="Nhập số điểm" oninput="formatNumberInput(this)">
-                <button onclick="modifyScore('blue', 'total', 'add')" style="background: blue; color: white;">Tổng +</button>
-                <button onclick="modifyScore('blue', 'round', 'add')" style="background: yellow; color: black;">Vòng +</button>
-                <button onclick="modifyScore('blue', 'round', 'sub')" style="background: red; color: white;">Vòng -</button>
+                <button onclick="modifyScore('blue', 'total', 'add')" style="background: blue; color: white;">Tổng
+                    +</button>
+                <button onclick="modifyScore('blue', 'round', 'add')" style="background: yellow; color: black;">Vòng
+                    +</button>
+                <button onclick="modifyScore('blue', 'round', 'sub')" style="background: red; color: white;">Vòng
+                    -</button>
             </div>
             <div class="flex-row" id="cards-row-blue"></div>
         </div>
 
-        <div class="flex-row" style="margin-top: 25px; border-top: 2px dashed #ccc; padding-top: 15px; justify-content: center;">
-            <button onclick="resetAllScores('round')" style="background: purple; font-size: 16px; padding: 12px 25px;">Reset điểm vòng</button>
-            <button onclick="resetAllScores('total')" style="background: #ff00ff; font-size: 16px; padding: 12px 25px;">Reset điểm tổng</button>
+        <div class="flex-row"
+            style="margin-top: 25px; border-top: 2px dashed #ccc; padding-top: 15px; justify-content: center;">
+            <button onclick="resetAllScores('round')"
+                style="background: purple; font-size: 16px; padding: 12px 25px;">Reset điểm vòng</button>
+            <button onclick="resetAllScores('total')"
+                style="background: #ff00ff; font-size: 16px; padding: 12px 25px;">Reset điểm tổng</button>
         </div>
     </div>
 
@@ -235,7 +295,7 @@
         var supabaseUrl = 'https://vjwwbzjzcbtkksehwfll.supabase.co';
         var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqd3diemp6Y2J0a2tzZWh3ZmxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NDIyOTYsImV4cCI6MjA5NTUxODI5Nn0.Zcn4hvlLtRirM-SPGrFvu3ivu8RYF9WngvbxCMCGfh4';
         var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        
+
         const channel = supabase.channel('wheel_room', {
             config: { broadcast: { self: true } }
         });
@@ -262,9 +322,17 @@
             let duration = parseInt(timeInput);
             if (isNaN(duration) || duration < 5 || duration > 20) {
                 duration = Math.floor(Math.random() * (20 - 5 + 1)) + 5;
-                document.getElementById('spinTime').value = duration; 
+                document.getElementById('spinTime').value = duration;
             }
-            sendEvent('spin_wheel', { duration });
+
+            const extraSpins = duration * 360;
+            const randomOffset = Math.floor(Math.random() * 360);
+
+            // LẤY MỐC THỜI GIAN THỰC KHI BẮT ĐẦU ẤN SPIN (Tính bằng mili giây)
+            const startTime = Date.now();
+
+            // Truyền thêm startTime sang cho các màn hình hiển thị
+            sendEvent('spin_wheel', { duration, randomOffset, startTime });
         }
 
         function setPointer(pointerName, state) {
@@ -338,14 +406,17 @@
 
         function showValue() { sendEvent('show_value', {}); }
         function hideValue() { sendEvent('hide_value', {}); }
-        function findHighestWedge() { sendEvent('find_highest', {}); }
+        function findHighestWedge() {
+            const startTime = Date.now();
+            sendEvent('find_highest', { startTime });
+        }
 
         const itemsList = [
             "Thẻ Phần thưởng", "Thẻ 1/2 thứ 1", "Thẻ 1/2 thứ 2", "Thẻ Cơ hội", "Thẻ Nhân Đôi", "Thẻ Kháng Mất điểm", "Thẻ Bảo vệ", "Thẻ Thêm lượt",
             "Ô Độc đắc", "Ô Ẩn số", "Ô Bí Mật 1", "Ô Bí Mật 2", "Ô Siêu Tốc", "Ô Thêm lượt", "Ô Két sắt", "Ô Nhân đôi", "Ô 1 Triệu", "Ô 1.000", "Ô 2.500", "Ô 3.500", "Ô 4.000", "Ô 5.000", "Ô Mất điểm"
         ];
         const container = document.getElementById('itemsContainer');
-        itemsList.forEach(function(item) {
+        itemsList.forEach(function (item) {
             const div = document.createElement('div');
             div.className = 'item-card';
             div.innerHTML = `
@@ -372,7 +443,7 @@
         };
 
         const playerCardNames = [
-            "Thẻ 1/2 (1)", "Thẻ 1/2 (2)", "Cơ Hội", "Kháng Mất Điểm", "10.000", 
+            "Thẻ 1/2 (1)", "Thẻ 1/2 (2)", "Cơ Hội", "Kháng Mất Điểm", "10.000",
             "1 Triệu", "Thẻ Nhân Đôi", "Bảo Vệ", "Thẻ Thêm Lượt", "Ô Nhân Đôi", "Ô Thêm Lượt"
         ];
 
@@ -455,6 +526,10 @@
         initPlayerCardControls('blue');
         syncScoresToWheel();
 
+        function resetWheelRotation() {
+            sendEvent('reset_rotation', {});
+        }
+
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (e.keyCode === 123) e.preventDefault();
@@ -464,4 +539,5 @@
         });
     </script>
 </body>
+
 </html>
