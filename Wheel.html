@@ -430,7 +430,9 @@
             "Ô 1.000":            { angle: 97.5,  img: "Ô 1000.png" },
             "Ô 2.500":            { angle: 97.5,  img: "Ô 2500.png" },
             "Ô 3.500":            { angle: 97.5,  img: "Ô 3500.png" },
-            "Ô 4.000":            { angle: 97.5,  img: "Ô 4000.png" }
+            "Ô 4.000":            { angle: 97.5,  img: "Ô 4000.png" },
+            "Ô Đổi điểm":         { angle: 337.5,  img: "Ô Đổi Điểm.png" },
+            "Ô Quyền năng":         { angle: 157.5,  img: "Ô Quyền Năng.png" }
         };
 
         Object.keys(itemsPlacementConfig).forEach(itemName => {
@@ -545,7 +547,6 @@
         let animationFrameId = null;
 
         function executeSpin(duration, randomOffset, startTime) {
-            // Hủy animation cũ nếu có lệnh mới đè lên
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
 
             const offset = (typeof randomOffset !== 'undefined') ? randomOffset : Math.floor(Math.random() * 360);
@@ -559,11 +560,9 @@
             const startTimestamp = startTime || Date.now();
             const durationMs = duration * 1000;
 
-            // Định nghĩa hàm mô phỏng chính xác cubic-bezier(0.25, 1, 0.5, 1) của CSS
-            // Đảm bảo cả hai tab dù xử lý lệch mili giây vẫn cho ra kết quả tọa độ xoay y hệt nhau tại cùng một thời điểm máy tính
-            function easeOutCubicBezier(t) {
-                // Sử dụng công thức toán học tính mượt điểm dừng tương ứng cubic-bezier
-                return 1 - Math.pow(1 - t, 3);
+            // NÂNG CẤP: Thay easeOutCubic bằng easeOutQuint giúp nón lướt điệu nghệ và mượt mà hơn ở các vòng cuối
+            function easeOutQuint(t) {
+                return 1 - Math.pow(1 - t, 5);
             }
 
             function updateProgress() {
@@ -571,18 +570,16 @@
                 const elapsed = now - startTimestamp;
 
                 if (elapsed >= durationMs) {
-                    // Đã chạy hết thời gian quay -> Đưa thẳng tới đích và dừng hẳn
                     wheelGraphic.style.transition = 'none';
                     wheelGraphic.style.transform = `rotate(${targetRot}deg)`;
                     saveWheelState();
                     animationFrameId = null;
                 } else {
                     if (elapsed < 0) {
-                        // Phòng trường hợp sai lệch đồng hồ hệ thống cực nhỏ giữa các luồng xử lý
                         wheelGraphic.style.transform = `rotate(${startRot}deg)`;
                     } else {
                         const t = elapsed / durationMs;
-                        const progress = easeOutCubicBezier(t);
+                        const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
                         
                         wheelGraphic.style.transition = 'none';
@@ -592,7 +589,6 @@
                 }
             }
 
-            // Bắt đầu chu kỳ render mượt mà đồng bộ thời gian thực
             animationFrameId = requestAnimationFrame(updateProgress);
         }
 
@@ -641,12 +637,9 @@
         }
 
         function executeFindHighest(startTime) {
-            // Hủy chuỗi animation cũ nếu có để tránh xung đột luồng quay
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            
             if (!isSpecialMode || specialWedges.length === 0) return;
 
-            // 1. Thuật toán tìm vị trí ô có giá trị lớn nhất (Giữ nguyên logic gốc của bạn)
             const parseVal = (v) => typeof v === 'string' ? parseInt(v.replace('x', '')) : v;
             let numericValues = specialWedges.map(parseVal);
             let maxVal = Math.max(...numericValues);
@@ -656,19 +649,17 @@
             let targetAngleDiff = (360 - targetCenterAngle) - currentNormalized;
             if (targetAngleDiff <= 0) targetAngleDiff += 360;
 
-            // 2. Thiết lập thông số quay (Quay thêm 3 vòng = 1080 độ trong 4 giây)
             const startRot = currentRotation;
             const targetRot = currentRotation + targetAngleDiff + 1080;
-            currentRotation = targetRot; // Cập nhật góc đích cuối cùng cho biến toàn cục
+            currentRotation = targetRot;
 
             specialValuePopup.style.display = 'none';
 
-            // 3. Cấu hình mốc thời gian thực đồng bộ tuyệt đối
             const startTimestamp = startTime || Date.now();
-            const durationMs = 4000; // Thời gian quay cố định là 4 giây (4000ms)
+            const durationMs = 4000;
 
-            function easeOutCubicBezier(t) {
-                return 1 - Math.pow(1 - t, 3); // Hàm nội suy cubic-bezier(0.25, 1, 0.5, 1) mượt mà
+            function easeOutQuint(t) {
+                return 1 - Math.pow(1 - t, 5);
             }
 
             function updateFindHighestProgress() {
@@ -676,11 +667,9 @@
                 const elapsed = now - startTimestamp;
 
                 if (elapsed >= durationMs) {
-                    // Khi đã hết thời gian 4 giây -> Đưa nón về đích chính xác và kết thúc animation
                     wheelGraphic.style.transition = 'none';
                     wheelGraphic.style.transform = `rotate(${targetRot}deg)`;
                     
-                    // Hiển thị popup điểm số ô cao nhất
                     let realValue = specialWedges[targetIndex];
                     specialValuePopup.innerText = typeof realValue === 'number' ? realValue.toLocaleString() + " điểm" : realValue;
                     specialValuePopup.style.display = 'block';
@@ -691,9 +680,8 @@
                     if (elapsed < 0) {
                         wheelGraphic.style.transform = `rotate(${startRot}deg)`;
                     } else {
-                        // Tính toán góc quay chính xác dựa trên thời gian thực trôi qua
                         const t = elapsed / durationMs;
-                        const progress = easeOutCubicBezier(t);
+                        const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
                         
                         wheelGraphic.style.transition = 'none';
@@ -703,7 +691,6 @@
                 }
             }
 
-            // Bắt đầu vòng lặp render đồng bộ
             animationFrameId = requestAnimationFrame(updateFindHighestProgress);
         }
 

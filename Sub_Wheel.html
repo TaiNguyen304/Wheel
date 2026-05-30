@@ -283,7 +283,9 @@
             "Ô 1.000":            { angle: 97.5,  img: "Ô 1000.png" },
             "Ô 2.500":            { angle: 97.5,  img: "Ô 2500.png" },
             "Ô 3.500":            { angle: 97.5,  img: "Ô 3500.png" },
-            "Ô 4.000":            { angle: 97.5,  img: "Ô 4000.png" }
+            "Ô 4.000":            { angle: 97.5,  img: "Ô 4000.png" },
+            "Ô Đổi điểm":         { angle: 337.5,  img: "Ô Đổi Điểm.png" },
+            "Ô Quyền năng":         { angle: 157.5,  img: "Ô Quyền Năng.png" }
         };
 
         Object.keys(itemsPlacementConfig).forEach(itemName => {
@@ -411,8 +413,9 @@
             const startTimestamp = startTime || Date.now();
             const durationMs = duration * 1000;
 
-            function easeOutCubicBezier(t) {
-                return 1 - Math.pow(1 - t, 3);
+            // NÂNG CẤP: Hàm nội suy Quintic giúp giảm tốc siêu mịn ở giai đoạn cuối (giống quán tính thật)
+            function easeOutQuint(t) {
+                return 1 - Math.pow(1 - t, 5);
             }
 
             function updateProgress() {
@@ -429,7 +432,7 @@
                         wheelGraphic.style.transform = `rotate(${startRot}deg)`;
                     } else {
                         const t = elapsed / durationMs;
-                        const progress = easeOutCubicBezier(t);
+                        const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
                         
                         wheelGraphic.style.transition = 'none';
@@ -508,8 +511,9 @@
             const startTimestamp = startTime || Date.now();
             const durationMs = 4000;
 
-            function easeOutCubicBezier(t) {
-                return 1 - Math.pow(1 - t, 3);
+            // NÂNG CẤP: Hàm nội suy Quintic đồng bộ cho tính năng tìm ô cao nhất
+            function easeOutQuint(t) {
+                return 1 - Math.pow(1 - t, 5);
             }
 
             function updateFindHighestProgress() {
@@ -531,7 +535,7 @@
                         wheelGraphic.style.transform = `rotate(${startRot}deg)`;
                     } else {
                         const t = elapsed / durationMs;
-                        const progress = easeOutCubicBezier(t);
+                        const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
                         
                         wheelGraphic.style.transition = 'none';
