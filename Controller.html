@@ -166,6 +166,8 @@
             <button class="btn-off" onclick="toggleWheel('normal', false)">Ẩn Nón</button>
             <button onclick="toggleWheel('special', true)">Hiện Nón Đặc Biệt</button>
             <button class="btn-off" onclick="toggleWheel('special', false)">Ẩn Nón Đặc Biệt</button>
+            <button onclick="toggleWheel('sub_wheel', true)" style="background-color: #800080; color: white;">Hiện Nón Phụ</button>
+            <button class="btn-off" onclick="toggleWheel('sub_wheel', false)">Ẩn Nón Phụ</button>
             <button onclick="resetWheelRotation()" style="background-color: #800080; color: white;">Reset Góc
                 Quay</button>
         </div>
@@ -174,6 +176,19 @@
             <input type="number" id="spinTime" min="5" max="20" placeholder="VD: 10">
             <button onclick="spinWheel()">Quay Nón</button>
         </div>
+    </div>
+
+    <div class="section">
+        <h2>Điều khiển Nón Phụ</h2>
+        <div class="flex-row">
+            <button onclick="shuffleSubWheel()" style="background: blue; color: white;">Xáo giá trị nón phụ</button>
+            <button onclick="showValue()" style="background: green; color: white;">Hiện giá trị ô quay vào</button>
+            <button onclick="findHighestWedge()" style="background: red; color: white;">Tìm ô cao nhất</button>
+            <button onclick="hideValue()" style="background: yellow; color: #000;">Ẩn giá trị</button>
+        </div>
+
+        <h3 style="margin-top: 20px; margin-bottom: 5px;">Sơ đồ 24 ô Nón Phụ</h3>
+        <div class="grid-6x4" id="subGridContainer"></div>
     </div>
 
     <div class="section">
@@ -347,6 +362,59 @@
             sendEvent('toggle_item', { itemName, isShow });
         }
 
+        // Thêm hàm xáo và phân bố điểm cho Nón Phụ
+        function shuffleSubWheel() {
+            // Range điểm cố định gồm chuẩn xác 24 ô theo yêu cầu:
+            // 5x15k, 4x20k, 4x25k, 3x30k, 3x35k, 2x40k, 2x45k, 1x50k (Tổng = 24 ô)
+            let baseWedges = [
+                15000, 15000, 15000, 15000, 15000,
+                20000, 20000, 20000, 20000,
+                25000, 25000, 25000, 25000,
+                30000, 30000, 30000,
+                35000, 35000, 35000,
+                40000, 40000,
+                45000, 45000,
+                50000
+            ];
+
+            // Thuật toán xáo bài ngẫu nhiên Fisher-Yates công bằng
+            for (let i = baseWedges.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [baseWedges[i], baseWedges[j]] = [baseWedges[j], baseWedges[i]];
+            }
+
+            // Gửi sự kiện cập nhật cấu trúc mảng nón phụ sang hệ thống Realtime
+            sendEvent('shuffle_special', { wedges: baseWedges });
+
+            // Render sơ đồ màu sắc đồ họa hiển thị lên Controller
+            renderSubGrid(baseWedges);
+        }
+
+        function renderSubGrid(wedges) {
+            const container = document.getElementById('subGridContainer');
+            container.innerHTML = '';
+
+            wedges.forEach((val, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'wedge-cell';
+                cell.innerText = `Ô ${index + 1}\n${val.toLocaleString('vi-VN')} đ`;
+
+                // Thiết lập thuộc tính chữ trắng đậm chuẩn mực
+                cell.style.color = 'white';
+                cell.style.fontWeight = 'bold';
+
+                // Xử lý phân bổ sơ đồ màu sắc theo yêu cầu đề bài
+                if (val === 50000) {
+                    cell.style.backgroundColor = 'purple'; // Ô 50.000 màu tím
+                } else if (val === 45000) {
+                    cell.style.backgroundColor = '#ff00ff'; // Ô 45.000 màu ff00ff
+                } else {
+                    cell.style.backgroundColor = 'red'; // Các ô còn lại màu đỏ
+                }
+                container.appendChild(cell);
+            });
+        }
+
         let currentSpecialWedges = [];
 
         function shuffleSpecialWheel() {
@@ -360,8 +428,8 @@
             } else {
                 const topPrize = parseInt(prizeRadio);
                 wedges = [
-                    ...Array(6).fill(30000), ...Array(5).fill(35000), ...Array(4).fill(40000),
-                    ...Array(3).fill(45000), ...Array(3).fill(50000), ...Array(2).fill(75000), topPrize
+                    ...Array(5).fill(30000), ...Array(4).fill(35000), ...Array(4).fill(40000),
+                    ...Array(3).fill(45000), ...Array(3).fill(50000), ...Array(2).fill(55000), ...Array(2).fill(75000), topPrize
                 ];
             }
 

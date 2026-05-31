@@ -254,7 +254,7 @@
 
         let currentRotation = 0;
         let isSpecialMode = false;
-        let specialWedges = []; 
+        let specialWedges = [];
 
         const wheelGraphic = document.getElementById('wheelGraphic');
         const wheelArea = document.getElementById('wheelArea');
@@ -262,30 +262,30 @@
         const specialValuePopup = document.getElementById('specialValuePopup');
 
         const itemsPlacementConfig = {
-            "Thẻ Phần thưởng":    { angle: 22.5,  img: "Thẻ Phần Thưởng.png" },
-            "Thẻ 1/2 thứ 1":     { angle: 37.5,  img: "Thẻ 12 thứ 1.png" },
-            "Thẻ 1/2 thứ 2":     { angle: 247.5, img: "Thẻ 12 thứ 2.png" },
-            "Thẻ Cơ hội":         { angle: 52.5,  img: "Thẻ Cơ Hội.png" },
-            "Thẻ Nhân Đôi":       { angle: 187.5, img: "Thẻ Nhân Đôi.png" },
+            "Thẻ Phần thưởng": { angle: 22.5, img: "Thẻ Phần Thưởng.png" },
+            "Thẻ 1/2 thứ 1": { angle: 37.5, img: "Thẻ 12 thứ 1.png" },
+            "Thẻ 1/2 thứ 2": { angle: 247.5, img: "Thẻ 12 thứ 2.png" },
+            "Thẻ Cơ hội": { angle: 52.5, img: "Thẻ Cơ Hội.png" },
+            "Thẻ Nhân Đôi": { angle: 187.5, img: "Thẻ Nhân Đôi.png" },
             "Thẻ Kháng Mất điểm": { angle: 112.5, img: "Thẻ Kháng Mất Điểm.png" },
-            "Thẻ Bảo vệ":         { angle: 217.5, img: "Thẻ Bảo Vệ.png" },
-            "Thẻ Thêm lượt":      { angle: 262.5, img: "Thẻ Thêm Lượt.png" },
-            "Ô Độc đắc":          { angle: 142.5,  img: "Ô Độc Đắc.png" },
-            "Ô Ẩn số":            { angle: 322.5, img: "Ô Ẩn Số.png" },
-            "Ô Bí Mật 1":         { angle: 157.5,  img: "Ô Bí Mật 1.png" },
-            "Ô Bí Mật 2":         { angle: 337.5, img: "Ô Bí Mật 2.png" },
-            "Ô Siêu Tốc":         { angle: 142.5,  img: "Ô Siêu Tốc.png" },
-            "Ô Thêm lượt":        { angle: 322.5, img: "Ô Thêm Lượt.png" },
-            "Ô Két sắt":          { angle: 142.5,  img: "Ô Két Sắt.png" },
-            "Ô Nhân đôi":         { angle: 322.5, img: "Ô Nhân Đôi.png" },
-            "Ô 1 Triệu":          { angle: 172.5,  img: "Ô 1 Triệu.png" },
-            "Ô Mất điểm":         { angle: 82.5,  img: "Ô Mất Điểm.png" },
-            "Ô 1.000":            { angle: 97.5,  img: "Ô 1000.png" },
-            "Ô 2.500":            { angle: 97.5,  img: "Ô 2500.png" },
-            "Ô 3.500":            { angle: 97.5,  img: "Ô 3500.png" },
-            "Ô 4.000":            { angle: 97.5,  img: "Ô 4000.png" },
-            "Ô Đổi điểm":         { angle: 337.5,  img: "Ô Đổi Điểm.png" },
-            "Ô Quyền năng":         { angle: 157.5,  img: "Ô Quyền Năng.png" }
+            "Thẻ Bảo vệ": { angle: 217.5, img: "Thẻ Bảo Vệ.png" },
+            "Thẻ Thêm lượt": { angle: 262.5, img: "Thẻ Thêm Lượt.png" },
+            "Ô Độc đắc": { angle: 142.5, img: "Ô Độc Đắc.png" },
+            "Ô Ẩn số": { angle: 322.5, img: "Ô Ẩn Số.png" },
+            "Ô Bí Mật 1": { angle: 157.5, img: "Ô Bí Mật 1.png" },
+            "Ô Bí Mật 2": { angle: 337.5, img: "Ô Bí Mật 2.png" },
+            "Ô Siêu Tốc": { angle: 142.5, img: "Ô Siêu Tốc.png" },
+            "Ô Thêm lượt": { angle: 322.5, img: "Ô Thêm Lượt.png" },
+            "Ô Két sắt": { angle: 142.5, img: "Ô Két Sắt.png" },
+            "Ô Nhân đôi": { angle: 322.5, img: "Ô Nhân Đôi.png" },
+            "Ô 1 Triệu": { angle: 172.5, img: "Ô 1 Triệu.png" },
+            "Ô Mất điểm": { angle: 82.5, img: "Ô Mất Điểm.png" },
+            "Ô 1.000": { angle: 97.5, img: "Ô 1000.png" },
+            "Ô 2.500": { angle: 97.5, img: "Ô 2500.png" },
+            "Ô 3.500": { angle: 97.5, img: "Ô 3500.png" },
+            "Ô 4.000": { angle: 97.5, img: "Ô 4000.png" },
+            "Ô Đổi điểm": { angle: 337.5, img: "Ô Đổi Điểm.png" },
+            "Ô Quyền năng": { angle: 157.5, img: "Ô Quyền Năng.png" }
         };
 
         Object.keys(itemsPlacementConfig).forEach(itemName => {
@@ -346,15 +346,15 @@
                 currentRotation = state.currentRotation || 0;
                 isSpecialMode = state.isSpecialMode || false;
                 specialWedges = state.specialWedges || [];
-                
+
                 wheelGraphic.style.transition = 'none';
                 wheelGraphic.style.transform = 'rotate(' + currentRotation + 'deg)';
                 wheelGraphic.style.display = state.wheelDisplay || 'block';
                 wheelGraphic.style.backgroundImage = state.wheelBg || "url('./Nón.png')";
-                
+
                 if (state.zoomed) wheelArea.classList.add('zoomed');
                 else wheelArea.classList.remove('zoomed');
-                
+
                 specialValuePopup.style.display = state.popupDisplay || 'none';
                 specialValuePopup.innerText = state.popupText || '0 điểm';
 
@@ -365,11 +365,11 @@
                         if (el) el.style.display = state.itemsState[itemName];
                     });
                 }
-            } catch(e) { console.error(e); }
+            } catch (e) { console.error(e); }
         }
 
         function executeToggleItem(itemName, isShow) {
-            if (itemName === "Ô 5.000") return; 
+            if (itemName === "Ô 5.000") return;
             const targetId = 'render-item-' + itemName.replace(/\s+/g, '_');
             const itemElement = document.getElementById(targetId);
             if (itemElement) {
@@ -385,9 +385,14 @@
                 return;
             }
             wheelGraphic.style.display = 'block';
+
             if (type === 'special') {
                 wheelGraphic.style.backgroundImage = "url('./Nón Đặc Biệt.png')";
                 isSpecialMode = true;
+            } else if (type === 'sub_wheel') {
+                // Cập nhật đường dẫn ảnh cho màn hình phụ
+                wheelGraphic.style.backgroundImage = "url('./Nón Phụ.png')";
+                isSpecialMode = true; // Kích hoạt biến trạng thái xử lý logic hiển thị popup và tính toán ô điểm
             } else {
                 wheelGraphic.style.backgroundImage = "url('./Nón.png')";
                 isSpecialMode = false;
@@ -403,11 +408,11 @@
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
 
             const offset = (typeof randomOffset !== 'undefined') ? randomOffset : Math.floor(Math.random() * 360);
-            const extraSpins = duration * 360; 
-            
+            const extraSpins = duration * 360;
+
             const startRot = currentRotation;
             const targetRot = currentRotation + extraSpins + offset;
-            currentRotation = targetRot; 
+            currentRotation = targetRot;
             specialValuePopup.style.display = 'none';
 
             const startTimestamp = startTime || Date.now();
@@ -434,7 +439,7 @@
                         const t = elapsed / durationMs;
                         const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
-                        
+
                         wheelGraphic.style.transition = 'none';
                         wheelGraphic.style.transform = `rotate(${currentPos}deg)`;
                     }
@@ -523,11 +528,11 @@
                 if (elapsed >= durationMs) {
                     wheelGraphic.style.transition = 'none';
                     wheelGraphic.style.transform = `rotate(${targetRot}deg)`;
-                    
+
                     let realValue = specialWedges[targetIndex];
                     specialValuePopup.innerText = typeof realValue === 'number' ? realValue.toLocaleString() + " điểm" : realValue;
                     specialValuePopup.style.display = 'block';
-                    
+
                     saveWheelState();
                     animationFrameId = null;
                 } else {
@@ -537,7 +542,7 @@
                         const t = elapsed / durationMs;
                         const progress = easeOutQuint(t);
                         const currentPos = startRot + (targetRot - startRot) * progress;
-                        
+
                         wheelGraphic.style.transition = 'none';
                         wheelGraphic.style.transform = `rotate(${currentPos}deg)`;
                     }
@@ -552,29 +557,29 @@
 
         try {
             const channel = supabase.channel('wheel_room');
-            channel.on('broadcast', { event: 'toggle_wheel' }, function(payload) {
+            channel.on('broadcast', { event: 'toggle_wheel' }, function (payload) {
                 executeToggleWheel(payload.payload.type, payload.payload.isShow);
-            }).on('broadcast', { event: 'spin_wheel' }, function(payload) {
+            }).on('broadcast', { event: 'spin_wheel' }, function (payload) {
                 executeSpin(payload.payload.duration, payload.payload.randomOffset, payload.payload.startTime);
-            }).on('broadcast', { event: 'pointer_light' }, function(payload) {
+            }).on('broadcast', { event: 'pointer_light' }, function (payload) {
                 executePointerLight(payload.payload.pointerName, payload.payload.state);
-            }).on('broadcast', { event: 'zoom_pointer' }, function(payload) {
+            }).on('broadcast', { event: 'zoom_pointer' }, function (payload) {
                 if (payload.payload.type === 'in') wheelArea.classList.add('zoomed');
                 else wheelArea.classList.remove('zoomed');
                 saveWheelState();
-            }).on('broadcast', { event: 'toggle_item' }, function(payload) {
+            }).on('broadcast', { event: 'toggle_item' }, function (payload) {
                 executeToggleItem(payload.payload.itemName, payload.payload.isShow);
-            }).on('broadcast', { event: 'shuffle_special' }, function(payload) {
+            }).on('broadcast', { event: 'shuffle_special' }, function (payload) {
                 specialWedges = payload.payload.wedges;
                 specialValuePopup.style.display = 'none';
                 saveWheelState();
-            }).on('broadcast', { event: 'show_value' }, function() {
+            }).on('broadcast', { event: 'show_value' }, function () {
                 executeShowValue();
-            }).on('broadcast', { event: 'hide_value' }, function() {
+            }).on('broadcast', { event: 'hide_value' }, function () {
                 executeHideValue();
-            }).on('broadcast', { event: 'find_highest' }, function(payload) {
+            }).on('broadcast', { event: 'find_highest' }, function (payload) {
                 executeFindHighest(payload.payload.startTime);
-            }).on('broadcast', { event: 'reset_rotation' }, function() {
+            }).on('broadcast', { event: 'reset_rotation' }, function () {
                 executeResetRotation();
             }).subscribe((status) => {
                 if (status === 'SUBSCRIBED') {
@@ -582,7 +587,7 @@
                 }
             });
 
-            channel.on('broadcast', { event: 'request_sync' }, function() {
+            channel.on('broadcast', { event: 'request_sync' }, function () {
                 const saved = localStorage.getItem('wheel_last_state');
                 if (saved) {
                     const state = JSON.parse(saved);
@@ -592,7 +597,7 @@
                         payload: { rotation: state.currentRotation, isSpecialMode: state.isSpecialMode, wedges: state.specialWedges }
                     });
                 }
-            }).on('broadcast', { event: 'spin_wheel_sync' }, function(payload) {
+            }).on('broadcast', { event: 'spin_wheel_sync' }, function (payload) {
                 if (animationFrameId) cancelAnimationFrame(animationFrameId);
                 currentRotation = payload.payload.rotation;
                 isSpecialMode = payload.payload.isSpecialMode;
@@ -604,7 +609,7 @@
 
         } catch (e) { }
 
-        window.addEventListener('storage', function(e) {
+        window.addEventListener('storage', function (e) {
             if (e.key === 'local_wheel_cmd') {
                 const data = JSON.parse(e.newValue);
                 if (data.event === 'toggle_item') executeToggleItem(data.itemName, data.isShow);
